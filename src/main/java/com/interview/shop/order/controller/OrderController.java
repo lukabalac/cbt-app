@@ -1,5 +1,6 @@
 package com.interview.shop.order.controller;
 
+import com.interview.shop.exception.EntityNotFoundException;
 import com.interview.shop.order.OrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,11 @@ public class OrderController {
   @GetMapping("/purchase/{id}")
   public @ResponseBody ResponseEntity<?> purchaseProduct(@PathVariable("id") Integer id) {
     var authentication = SecurityContextHolder.getContext().getAuthentication();
-    return new ResponseEntity<String>("Product purchased", HttpStatus.OK);
+    try {
+      orderService.purchase(id, authentication.getName());
+      return new ResponseEntity<String>("Product purchased", HttpStatus.OK);
+    } catch (EntityNotFoundException ex) {
+      return new ResponseEntity<String>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
   }
 }

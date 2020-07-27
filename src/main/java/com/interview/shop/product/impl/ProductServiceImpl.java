@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -36,5 +38,10 @@ public class ProductServiceImpl implements ProductService {
     public void updateTimesPurchased(Product product) {
         product.setTimesPurchased(product.getTimesPurchased()+1);
         productRepo.save(product);
+    }
+
+    @Override
+    public List<Product> getPopular(int trigger) {
+        return productRepo.findAllPopularProducts(trigger);
     }
 }

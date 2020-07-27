@@ -11,7 +11,7 @@
     <h1>Hi - [[${user.email}]]</h1>
     Here is the list of orders you have with us
 <ul><li th:each="item : ${orders}">
-    [[item.product.name]]
+    <a th:href="@{/products/__${item.id}__}">[[${item.product.name}]]</a>
 </li></ul>
 </body>
 </html>

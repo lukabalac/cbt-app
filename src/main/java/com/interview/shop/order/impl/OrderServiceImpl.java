@@ -1,5 +1,6 @@
 package com.interview.shop.order.impl;
 
+import com.interview.shop.exception.EntityNotFoundException;
 import com.interview.shop.order.OrderService;
 import com.interview.shop.order.dao.OrderRepo;
 import com.interview.shop.order.model.Order;
@@ -22,7 +23,7 @@ public class OrderServiceImpl implements OrderService {
 
   @Transactional
   @Override
-  public Order purchase(int productId, String userName) {
+  public Order purchase(int productId, String userName) throws EntityNotFoundException {
     var product = productService.get(productId);
     var order = orderRepo.save(new Order(product, userService.get(userName)));
     productService.updateTimesPurchased(product);
