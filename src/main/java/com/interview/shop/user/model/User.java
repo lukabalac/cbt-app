@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -38,14 +39,16 @@ public class User {
   @NotBlank(message = "*Must not be blank")
   private String password;
 
-  @NotNull(message = "Roles must be initialized")
   @ManyToMany(cascade = CascadeType.DETACH)
   @JoinTable(
       name = "user_role",
       joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "role_id"))
-  private Set<Role> roles;
+  private Set<Role> roles = new HashSet<>();
 
   public User(String email,String password,Role role) {
+    this.email = email;
+    this.password = password;
+    this.roles.add(role);
   }
 }
