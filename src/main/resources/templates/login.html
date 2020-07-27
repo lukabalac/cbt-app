@@ -2,9 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Login</title>
 </head>
 <body>
+<section class="login">
 
+    <div>
+        <form class="login-form" action="/login/authenticate" method="post" autocomplete="off">
+            <div th:if="${param.error}">
+                <p class="red-text">Invalid Credentials</p>
+            </div>
+            <div>
+                <input id="username" placeholder="client@foo.com" type="text" autocomplete="off" name="username">
+                <input id="password" placeholder="client123" type="password" autocomplete="off" name="password">
+                <button>Login</button>
+            </div>
+
+        </form>
+
+    </div>
+</section>
 </body>
 </html>
