@@ -9,9 +9,9 @@
 </head>
 <body>
 <th:block th:replace="components/header :: content"></th:block>
-<div id="popular_products">
+<div id="popular_products_wrap">
     <p>Checkout our popular products</p>
-    <ul>
+    <ul id="popular_products">
         <li>
             <a href="/products/1">Kittens</a>
         </li>
@@ -34,6 +34,8 @@
         crossorigin="anonymous"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
+        var $popularProductWrap = $("#popular_products");
+        getPopularProducts();
         $(".order-btn").click(function (e) {
             var productId = $(this).data("id");
             console.log(productId);
@@ -45,20 +47,14 @@
                 })
                 .always(function () {
                     //TODO check product popularity
-
+                    getPopularProducts();
                 });
         })
         function getPopularProducts(){
             $.get("/products/popular" , function (data) {
-                console.log(data);
+               console.log(data);
             })
-                .fail(function () {
-                   console.log("")
-                })
-                .always(function () {
-                    //TODO check product popularity
-                    alert("finished");
-                });
+
         }
     });
 </script>
