@@ -6,7 +6,9 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.header.writers.StaticHeadersWriter;
@@ -15,25 +17,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import javax.sql.DataSource;
 
 @Configuration
-@Order(1)
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class Security extends WebSecurityConfigurerAdapter {
-  @Autowired private BCryptPasswordEncoder bCryptPasswordEncoder;
-  @Autowired private DataSource dataSource;
 
-  @Value("${spring.queries.users-query}")
-  private String usersQuery;
-
-  @Value("${spring.queries.roles-query}")
-  private String rolesQuery;
-
-  @Override
-  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.jdbcAuthentication()
-        .usersByUsernameQuery(usersQuery)
-        .authoritiesByUsernameQuery(rolesQuery)
-        .dataSource(dataSource)
-        .passwordEncoder(bCryptPasswordEncoder);
-  }
 
   protected void configure(HttpSecurity http) throws Exception {
     http.csrf()
@@ -44,8 +31,8 @@ public class Security extends WebSecurityConfigurerAdapter {
         .permitAll()
         .antMatchers("/login", "/access-denied", "/products/**","/login/**")
         .permitAll()
-        .antMatchers("/api/**","/user/**")
-        .hasAnyAuthority("CLIENT")
+        .antMatchers("/orders/**","/user/**")
+        .hasAuthority("CLIENT")
         .anyRequest()
         .authenticated()
         .and()
@@ -53,14 +40,14 @@ public class Security extends WebSecurityConfigurerAdapter {
         .loginPage("/login")
         .loginProcessingUrl("/login/authenticate")
         .failureUrl("/login?error=true")
-        .usernameParameter("email")
+        .usernameParameter("username")
         .passwordParameter("password")
         .defaultSuccessUrl("/user/profile")
         .and()
         .logout()
         .deleteCookies("JSESSIONID")
         .logoutRequestMatcher(new AntPathRequestMatcher("/login/logout"))
-        .logoutSuccessUrl("/products")
+        .logoutSuccessUrl("/login")
         .and()
         .exceptionHandling()
         .accessDeniedPage("/access-denied")

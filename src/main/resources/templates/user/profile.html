@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Client profile</title>
 </head>
 <body>
-
+<th:block th:replace="components/header :: content"></th:block>
+    <h1>Hi - [[${user.email}]]</h1>
+    Here is the list of orders you have with us
+<ul><li th:each="item : ${orders}">
+    [[item.product.name]]
+</li></ul>
 </body>
 </html>

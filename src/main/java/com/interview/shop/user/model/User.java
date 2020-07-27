@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.LazyCollection;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -32,14 +33,11 @@ public class User {
   @NotBlank(message = "*Email must not be blank")
   private String email;
 
-  @JsonIgnore
-  @org.springframework.data.annotation.Transient
   @Column(name = "password")
   @Size(min = 6, message = "Must be minimum of 6 characters")
   @NotBlank(message = "*Must not be blank")
   private String password;
-
-  @ManyToMany(cascade = CascadeType.DETACH)
+  @ManyToMany(cascade = CascadeType.DETACH,fetch = FetchType.EAGER)
   @JoinTable(
       name = "user_role",
       joinColumns = @JoinColumn(name = "user_id"),

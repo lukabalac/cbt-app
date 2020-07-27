@@ -5,11 +5,13 @@ import com.interview.shop.order.dao.OrderRepo;
 import com.interview.shop.order.model.Order;
 import com.interview.shop.product.ProductService;
 import com.interview.shop.user.UserService;
+import com.interview.shop.user.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -25,5 +27,10 @@ public class OrderServiceImpl implements OrderService {
     var order = orderRepo.save(new Order(product, userService.get(userName)));
     productService.updateTimesPurchased(product);
     return order;
+  }
+
+  @Override
+  public List<Order> getAll(User user) {
+    return orderRepo.findAllByUser(user);
   }
 }

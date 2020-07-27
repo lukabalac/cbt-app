@@ -17,7 +17,7 @@
             <h1>[[${product.name}]]</h1>
             <p>[[${product.price}]]</p>
         </div>
-        <button class="order-btn"  th:data-id="${product.id}">Order now!</button>
+        <button sec:authorize="hasAuthority('CLIENT')" class="order-btn"  th:data-id="${product.id}">Order now!</button>
     </main>
 <script
         src="https://code.jquery.com/jquery-3.5.1.min.js"
@@ -28,7 +28,7 @@
             $(".order-btn").click(function(e){
                 var productId = $(this).data("id");
                 console.log(productId);
-                $.get( "/order/purchase", function() {
+                $.get( "/orders/purchase/"+productId, function() {
                     alert( "Product purchased");
                 })
                     .fail(function() {
