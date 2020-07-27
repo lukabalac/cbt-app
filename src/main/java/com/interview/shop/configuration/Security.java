@@ -42,7 +42,7 @@ public class Security extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
         .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
         .permitAll()
-        .antMatchers("/login", "/access-denied", "/products/**")
+        .antMatchers("/login", "/access-denied", "/products/**","/login/**")
         .permitAll()
         .antMatchers("/api/**","/user/**")
         .hasAnyAuthority("CLIENT")
