@@ -1,5 +1,10 @@
 package com.interview.shop.configuration;
 
+import com.interview.shop.user.RoleService;
+import com.interview.shop.user.UserService;
+import com.interview.shop.user.model.Role;
+import com.interview.shop.user.model.RoleType;
+import com.interview.shop.user.model.User;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,11 +20,14 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
   }
 
   @Bean
-  CommandLineRunner initialSetup() {
+  CommandLineRunner initialSetup(
+      RoleService roleService, UserService userService, BCryptPasswordEncoder encoder) {
 
     System.out.println("Running initial setup ");
     return (args) -> {
-
+      var clientRole = roleService.create(new Role(RoleType.CLIENT));
+      var user =
+          userService.create(new User("client@foo.com", encoder.encode("client123"), clientRole));
     };
   }
 }

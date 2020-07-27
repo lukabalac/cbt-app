@@ -23,4 +23,8 @@ public class Role {
   @Column(name = "role_name")
   @Enumerated(value = EnumType.STRING)
   private RoleType value;
+
+  public Role(RoleType value) {
+    this.value = value;
+  }
 }
