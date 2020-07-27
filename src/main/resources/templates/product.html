@@ -35,6 +35,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var $popularProductWrap = $("#popular_products");
+        //Retrieving popular products
         getPopularProducts();
         $(".order-btn").click(function (e) {
             var productId = $(this).data("id");
@@ -46,7 +47,7 @@
                     alert("Failed to purchase product: "+error);
                 })
                 .always(function () {
-                    //TODO check product popularity
+                    //Retrieving popular products
                     getPopularProducts();
                 });
         })
