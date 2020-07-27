@@ -1,5 +1,6 @@
 package com.interview.shop.configuration;
 
+import com.interview.shop.order.OrderService;
 import com.interview.shop.product.ProductService;
 import com.interview.shop.product.model.Product;
 import com.interview.shop.user.RoleService;
@@ -25,10 +26,10 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 
   @Bean
   CommandLineRunner initialSetup(
-      RoleService roleService,
-      UserService userService,
-      BCryptPasswordEncoder encoder,
-      ProductService productService) {
+          RoleService roleService,
+          UserService userService,
+          BCryptPasswordEncoder encoder,
+          ProductService productService) {
 
     System.out.println("Running initial setup ");
     return (args) -> {
@@ -39,6 +40,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
           productService.create(
               new Product(
                   "Kitten for sale", new BigDecimal("1000.00"), "https://picsum.photos/200"));
+
     };
   }
 }
