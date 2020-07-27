@@ -40,7 +40,7 @@
             var productId = $(this).data("id");
             console.log(productId);
             $.get("/orders/purchase/" + productId, function () {
-                alert("Product purchased");
+
             })
                 .fail(function (error) {
                     alert("Failed to purchase product: "+error);
@@ -53,6 +53,14 @@
         function getPopularProducts(){
             $.get("/products/popular" , function (data) {
                console.log(data);
+               $popularProductWrap.empty();
+                for(var i = 0; i < data.length; i++) {
+                    var product = data[i];
+                    var $li = $("<li>");
+                    var $a = $("<a>").attr("href","/products/"+product.id).text(product.name);
+                    $li.append($a);
+                    console.log(obj.id);
+                }
             })
 
         }
