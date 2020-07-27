@@ -9,4 +9,5 @@ public interface ProductService {
     Product create(Product product);
     Product get(int id);
     Page<Product> getAll(Pageable pageable);
+    void updateTimesPurchased(Product product);
 }

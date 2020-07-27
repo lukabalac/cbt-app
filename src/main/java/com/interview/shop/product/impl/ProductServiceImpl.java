@@ -31,4 +31,10 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> getAll(Pageable pageable) {
         return productRepo.findAll(pageable);
     }
+
+    @Override
+    public void updateTimesPurchased(Product product) {
+        product.setTimesPurchased(product.getTimesPurchased()+1);
+        productRepo.save(product);
+    }
 }
