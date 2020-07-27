@@ -1,0 +1,17 @@
+html,
+body,main {
+    height: 100%;
+}
+.product {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.img-wrap{
+    width:50%;
+}
+.img-wrap img {
+    width:100%;
+    height:auto;
+}

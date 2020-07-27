@@ -1,10 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Product - [[${product.name}]]</title>
+    <link rel="stylesheet" href="/css/app.css">
 </head>
 <body>
-
+    <main>
+        <div class="product">
+            <div class="img-wrap">
+                <img th:src="${product.imagePath}" alt="">
+            </div>
+            <h1>[[${product.name}]]</h1>
+            <p>[[${product.price}]]</p>
+        </div>
+    </main>
 </body>
 </html>
